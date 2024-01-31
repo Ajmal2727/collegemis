@@ -1,38 +1,184 @@
-.App {
-  text-align: center;
+
+/* HOME */
+#home{
+  background: rgb(0, 101, 219);
+  background: linear-gradient(90deg, rgb(0, 110, 219) 50%, rgb(0, 212, 255, 1) 100%);
+  min-height: 500px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.animated-button {
+  transition: transform 0.2s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.animated-button:hover {
+  transform: scale(1.1);
+}
+
+/* NAVBAR */
+
+/* .nav-link:hover {
+  background-color: #007bff; 
+  color: #fff; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+
+.active-link {
+  background-color: #007bff; 
+  color: #fff; 
+} */
+
+
+
+/* COLLEGES */
+
+#colleges{
+  height: 100vh;
+}
+
+.card{
+  transition: all 0.5 ease;
+}
+
+.card:hover{
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+}
+
+
+
+/* NEWSLETTER */
+
+#newsletter{
+  height: 100vh;
+}
+
+.circle {
+  padding: 16px 20px;
+  border-radius: 30%;
+  background-color: rgb(0, 101, 219);
+  color: #fff;
+  max-height: 50px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+  .timeline div {
+    padding: 0;
+    height: 40px;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .timeline hr {
+    border-top: 3px solid rgb(0, 101, 219);
+    margin: 0;
+    top: 17px;
+    position: relative;
   }
-  to {
-    transform: rotate(360deg);
+  .timeline .col-2 {
+    display: flex;
+    overflow: hidden;
   }
+  .timeline .corner {
+    border: 3px solid rgb(0, 101, 219);
+    width: 100%;
+    position: relative;
+    border-radius: 15px;
+  }
+  .timeline .top-right {
+    left: 50%;
+    top: -50%;
+  }
+  .timeline .left-bottom {
+    left: -50%;
+    top: calc(50% - 3px);
+  }
+  .timeline .top-left {
+    left: -50%;
+    top: -50%;
+  }
+  .timeline .right-bottom {
+    left: 50%;
+    top: calc(50% - 3px);
+  }
+
+  /* FOOTER */
+
+  #footer{
+    background: rgb(0, 101, 219);
+    background: linear-gradient(90deg, rgb(0, 110, 219) 50%, rgb(0, 212, 255, 1) 100%);
+  }
+
+  /* LOGIN FORM */
+
+  #login{
+    position: relative;
+    top: 6rem;
+  }
+
+  .login-form {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  .login-card{
+    position: relative;
+    top: 07rem;
+  }
+  
+
+
+.order-card {
+  color: #fff;
 }
+
+.bg-c-blue {
+  background: linear-gradient(45deg,#4099ff,#73b4ff);
+}
+
+.bg-c-green {
+  background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+}
+
+.bg-c-yellow {
+  background: linear-gradient(45deg,#FFB64D,#ffcb80);
+}
+
+.bg-c-pink {
+  background: linear-gradient(45deg,#FF5370,#ff869a);
+}
+
+
+.card {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+  padding: 25px;
+}
+
+.order-card i {
+  font-size: 26px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
