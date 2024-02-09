@@ -182,3 +182,13 @@
   float: right;
 }
 
+.hidden {
+  display: none;
+}
+
+.csv-download-btn {
+  text-decoration: none;
+}
+
+
+

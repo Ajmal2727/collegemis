@@ -23,7 +23,7 @@ const Login = () => {
                 <i className="fa fa-user-plus fa-4x mb-4 text-primary"></i>
                 <h5 className="card-title">ADMIN</h5>
                 <p className="card-text">Login as an Admin</p>
-                <NavLink to="/admin" className="btn btn-primary">
+                <NavLink to="/AdminDashboard" className="btn btn-primary">
                   DASHBOARD
                 </NavLink>
               </div>
@@ -35,7 +35,7 @@ const Login = () => {
                 <i className="fa fa-user fa-4x mb-4 text-primary"></i>
                 <h5 className="card-title">TEACHER</h5>
                 <p className="card-text">Login as a Teacher</p>
-                <NavLink to="/teacher" className="btn btn-primary">
+                <NavLink to="/TeacherDashboard" className="btn btn-primary">
                   DASHBOARD
                 </NavLink>
               </div>

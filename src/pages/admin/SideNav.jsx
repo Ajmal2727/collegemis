@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -16,11 +16,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import Settings from '@mui/icons-material/Settings';
-import Apps from '@mui/icons-material/Apps';
-import Person from '@mui/icons-material/Person';
-import MailIcon from '@mui/icons-material/Mail';
+import AppsIcon from '@mui/icons-material/Apps';
+import PersonIcon from '@mui/icons-material/Person';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -50,8 +52,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-
   ...theme.mixins.toolbar,
 }));
 
@@ -81,16 +81,52 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     boxSizing: 'border-box',
     ...(open && {
       ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
+      '& .MuiDrawer-paper': {
+        ...openedMixin(theme),
+        marginLeft: '0', // Adjusted to start from the left edge
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
     }),
     ...(!open && {
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
+      '& .MuiDrawer-paperAnchorDockedLeft': {
+        borderRight: 'none',
+      },
     }),
   }),
 );
 
-export default function MiniDrawer() {
+const ListItemTextStyled = styled(ListItemText)(({ theme }) => ({
+  fontWeight: 'bold',
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+}));
+
+const ListItemIconStyled = styled(ListItemIcon)(({ theme }) => ({
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+  '&:active': {
+    color: theme.palette.primary.main,
+  },
+}));
+
+const ActiveIndicator = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  width: 3,
+  height: '100%',
+  backgroundColor: theme.palette.primary.main,
+  left: 0,
+  top: 0,
+  transition: '0.3s ease',
+}));
+
+export default function SideNav() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -119,9 +155,11 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Saraswati Education Society
-          </Typography>
+          {open && (
+            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+              Admin
+            </Typography>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -132,50 +170,55 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Dashboard', 'Teacher', 'Student', 'Attendance'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {[
+            { text: 'Home', icon: <AppsIcon />, link: '/AdminDashboard' },
+            { text: 'Teacher', icon: <PersonIcon />, link: '/teacherdetails' },
+            { text: 'Student', icon: <PersonIcon />, link: '/studentdetails' },
+            { text: 'Complaints', icon: <HowToRegIcon />, link: '/complaints' },
+          ].map(({ text, icon, link }, index) => (
+            <ListItem key={text} disablePadding sx={{ display: 'block', position: 'relative' }}>
+              <ListItemButton component={NavLink} to={link} activeClassName={text === 'Teacher' ? 'Mui-selected' : ''} exact>
+                {window.location.pathname === link && <ActiveIndicator />}
+                <ListItemIconStyled
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 3 === 0 ? <Apps /> : <Person />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  {icon}
+                </ListItemIconStyled>
+                <ListItemTextStyled
+                  primary={text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {['Fee', 'Notice', 'Logout'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {[
+            { text: 'Fee', icon: <MonetizationOnIcon />, link: '/fee' },
+            { text: 'Notice', icon: <NotificationsIcon />, link: '/notice' },
+            { text: 'Logout', icon: <ExitToAppIcon />, link: '/login' },
+          ].map(({ text, icon, link }, index) => (
+            <ListItem key={text} disablePadding sx={{ display: 'block', position: 'relative' }}>
+              <ListItemButton component={NavLink} to={link} activeClassName="Mui-selected" exact>
+                {window.location.pathname === link && <ActiveIndicator />}
+                <ListItemIconStyled
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 3 === 1 ? <Person   /> : <Settings />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  {icon}
+                </ListItemIconStyled>
+                <ListItemTextStyled
+                  primary={text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
@@ -183,7 +226,6 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        
       </Box>
     </Box>
   );

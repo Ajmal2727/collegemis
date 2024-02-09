@@ -80,7 +80,7 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-              <NavLink to="/studentdb" type="submit" className="btn btn-primary">
+              <NavLink to="/StudentDb" type="submit" className="btn btn-primary">
                 Login
               </NavLink>
             </form>

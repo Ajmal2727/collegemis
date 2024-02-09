@@ -15,6 +15,14 @@ import Student from './components/Student';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import SideNav from './pages/admin/SideNav';
 import StuInfo from './pages/admin/StuInfo';
+import NoticePage from './pages/admin/Notice';
+import Complaints from './pages/admin/Complaints';
+import Fee from './pages/admin/Fee';
+import TeacherPageAdmin from './pages/admin/TeacherPageAdmin';
+import LogoutAdmin from './pages/admin/LogoutAdmin';
+import TeacherDashboard from './pages/admin/teacher/TeacherDashboard';
+import SideNavT from './pages/admin/teacher/SideNavT';
+import Classes from './pages/admin/teacher/classes';
 
 
 
@@ -34,9 +42,22 @@ ReactDOM.render(
       <Route path="/login" element={<Login />} />
       <Route path="/teacher" element={<Teacher/>} />
       <Route path="/Student" element={<Student/>} />
+
+      {/* Admin Dashboard */}
+
       <Route path="/AdminDashboard" element={<AdminDashboard/>} />
       <Route path="/sidenav" element={<SideNav/>} />
-      <Route path="/studentinfo" element={<StuInfo/>} />
+      <Route path="/studentdetails" element={<StuInfo/>} />
+      <Route path="/notice" element={<NoticePage/>} />
+      <Route path="/complaints" element={<Complaints/>} />
+      <Route path="/fee" element={<Fee/>} />
+      <Route path="/teacherdetails" element={<TeacherPageAdmin/>} />
+      <Route path="/logoutadmin" element={<LogoutAdmin/>} />
+      
+      {/* Teacher Dashboard */}
+      <Route path="/TeacherDashboard" element={<TeacherDashboard/>} />
+      <Route path="/Sidenavteacher" element={<SideNavT/>} />
+      <Route path="/classes" element={<Classes/>} />
      
       
     

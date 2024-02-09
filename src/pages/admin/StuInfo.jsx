@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,19 +6,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
-import {
-  GridRowModes,
-  DataGrid,
-  GridToolbarContainer,
-  GridActionsCellItem,
-  GridRowEditStopReasons,
-} from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import { DataGrid, GridActionsCellItem, GridRowModes, GridRowEditStopReasons } from '@mui/x-data-grid';
+import { randomCreatedDate, randomTraderName, randomId, randomArrayItem } from '@mui/x-data-grid-generator';
+import SideNav from './SideNav';  // Import your SideNav component
+import { CSVLink } from 'react-csv';
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
@@ -33,34 +26,33 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
+  
   {
     id: randomId(),
     name: randomTraderName(),
-    age: 36,
+    age: 25,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
+
   {
     id: randomId(),
     name: randomTraderName(),
-    age: 19,
+    age: 25,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
+
   {
     id: randomId(),
     name: randomTraderName(),
-    age: 28,
+    age: 25,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 23,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
+
+  
+  // Add more initial rows as needed
 ];
 
 function EditToolbar(props) {
@@ -76,17 +68,23 @@ function EditToolbar(props) {
   };
 
   return (
-    <GridToolbarContainer>
+    <div>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
         Add record
       </Button>
-    </GridToolbarContainer>
+      <CSVLink data={props.rows} filename={'student_details.csv'}>
+        <Button color="secondary" startIcon={<SaveIcon />}>
+          Export to CSV
+        </Button>
+      </CSVLink>
+    </div>
   );
 }
 
 export default function StuInfo() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const [searchText, setSearchText] = React.useState('');
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -128,6 +126,17 @@ export default function StuInfo() {
     setRowModesModel(newRowModesModel);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const filteredRows = rows.filter((row) =>
+    Object.values(row).some(
+      (value) =>
+        value && value.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  );
+
   const columns = [
     { field: 'name', headerName: 'Name', width: 180, editable: true },
     {
@@ -141,7 +150,7 @@ export default function StuInfo() {
     },
     {
       field: 'joinDate',
-      headerName: 'Join date',
+      headerName: 'Admission Date',
       type: 'date',
       width: 180,
       editable: true,
@@ -152,7 +161,7 @@ export default function StuInfo() {
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: ['Market', 'Finance', 'Development'],
+      valueOptions: ['Computer', 'Mechanical', 'Civil', 'Electrical'],
     },
     {
       field: 'actions',
@@ -203,33 +212,45 @@ export default function StuInfo() {
   ];
 
   return (
-    <Box
-      sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-      }}
-    >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar,
+    <Box sx={{ display: 'flex', marginTop: 12 }}>
+      <SideNav />
+      <Box
+        sx={{
+          height: 500,
+          width: '100%',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
         }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
+      >
+        <Box sx={{ marginBottom: 2, display: 'flex', alignItems: 'center' }}>
+          <SearchIcon sx={{ marginRight: 1 }} />
+          <TextField
+            label="Search"
+            variant="outlined"
+            value={searchText}
+            onChange={handleSearchChange}
+          />
+        </Box>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { setRows, setRowModesModel, rows },
+          }}
+        />
+      </Box>
     </Box>
   );
 }
