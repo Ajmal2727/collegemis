@@ -16,10 +16,11 @@ const styles = {
   card: {
     borderRadius: '8px',
     padding: '20px',
-    backgroundColor: '#f0f0f0', // Updated background color
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    transition: 'transform 0.3s, box-shadow 0.3s, margin-left 0.55s', // Updated transition
+    background: 'linear-gradient(135deg, #2196f3, #ffffff)', // Blue and white gradient
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+    transition: 'transform 0.3s, box-shadow 0.3s, margin-left 0.55s',
     marginBottom: '20px',
+    height: '100%', // Fixed height for all cards
     '&:hover': {
       transform: 'scale(1.05)',
     },
@@ -27,14 +28,14 @@ const styles = {
   icon: {
     fontSize: '3rem',
     marginBottom: '8px',
-    color: '#2196f3', // Updated icon color
+    color: '#ffffff', // White icon color
   },
   title: {
     marginBottom: '8px',
-    color: '#333333', // Updated title color
+    color: '#ffffff', // White title color
   },
   content: {
-    color: 'rgba(0, 0, 0, 0.8)',
+    color: '#ffffff', // White content color
   },
   section: {
     marginTop: '0px',
@@ -45,37 +46,38 @@ const styles = {
     marginLeft: '0px',
   },
   chartContainer: {
-    marginTop: '20px', // Adjusted margin top
+    marginTop: '20px',
   },
   bigNumber: {
-    fontSize: '2.5rem', // Increase font size
-    fontWeight: 'bold', // Bold font weight
-    color: '#ff5722', // Orange color
+    fontSize: '2.5rem',
+    fontWeight: 'bold',
+    color: '#ffffff',
   },
 };
 
 function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDepartmentCardHovered, setIsDepartmentCardHovered] = useState(false);
+
   const [liveData, setLiveData] = useState({
     students: [],
     teachers: [],
     fees: [],
-    departments: Array.from({ length: 5 }, () => 6), // Fixed 6 departments
+    departments: Array.from({ length: 5 }, () => 6),
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Generate random data for students, teachers, fees
-      const newStudents = [...liveData.students, Math.floor(Math.random() * 401) + 500]; // Between 500-900
-      const newTeachers = [...liveData.teachers, Math.floor(Math.random() * 21) + 30]; // Between 30-50
-      const newFees = [...liveData.fees, Math.floor(Math.random() * 200001) + 500000]; // Between 500,000 - 700,000
+      const newStudents = [...liveData.students, Math.floor(Math.random() * 401) + 500];
+      const newTeachers = [...liveData.teachers, Math.floor(Math.random() * 21) + 30];
+      const newFees = [...liveData.fees, Math.floor(Math.random() * 200001) + 500000];
       setLiveData({
-        students: newStudents.slice(-5), // Keep only the last 5 values
+        students: newStudents.slice(-5),
         teachers: newTeachers.slice(-5),
         fees: newFees.slice(-5),
         departments: liveData.departments,
       });
-    }, 5000); // Update every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [liveData]);
@@ -89,7 +91,7 @@ function AdminDashboard() {
         label: 'Students',
         data: liveData.students,
         fill: false,
-        borderColor: '#2196f3', // Blue color
+        borderColor: '#00bcd4', // Blue color
         tension: 0.1,
       },
       {
@@ -110,10 +112,25 @@ function AdminDashboard() {
         label: 'Departments',
         data: liveData.departments,
         fill: false,
-        borderColor: '#9c27b0', // Purple color
+        borderColor: isDepartmentCardHovered ? '#ffeb3b' : '#9c27b0', // Yellow color on hover, Purple color otherwise
         tension: 0.1,
       },
     ],
+  };
+
+  const options = {
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart',
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 100,
+        },
+      },
+    },
   };
 
   return (
@@ -123,7 +140,11 @@ function AdminDashboard() {
         <Container>
           <Grid container spacing={4}>
             <Grid item md={5.95}>
-              <Card style={styles.card}>
+              <Card
+                style={styles.card}
+                onMouseEnter={() => setIsDepartmentCardHovered(true)}
+                onMouseLeave={() => setIsDepartmentCardHovered(false)}
+              >
                 <CardContent>
                   <SchoolIcon style={styles.icon} />
                   <Typography gutterBottom variant="h5" component="div" style={styles.title}>
@@ -151,9 +172,16 @@ function AdminDashboard() {
             </Grid>
           </Grid>
 
+          {/* Added padding/margin between upper and lower cards */}
+          <div style={{ marginTop: '20px' }}></div>
+
           <Grid container spacing={4}>
             <Grid item md={5.95}>
-              <Card style={styles.card}>
+              <Card
+                style={styles.card}
+                onMouseEnter={() => setIsDepartmentCardHovered(true)}
+                onMouseLeave={() => setIsDepartmentCardHovered(false)}
+              >
                 <CardContent>
                   <BusinessIcon style={styles.icon} />
                   <Typography gutterBottom variant="h5" component="div" style={styles.title}>
@@ -183,7 +211,7 @@ function AdminDashboard() {
 
           <Grid container spacing={4} style={styles.chartContainer}>
             <Grid item xs={12}>
-              <Line data={data} options={{ plugins: { legend: { display: false } } }} />
+              <Line data={data} options={options} />
             </Grid>
           </Grid>
         </Container>
