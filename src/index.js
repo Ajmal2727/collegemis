@@ -23,6 +23,13 @@ import LogoutAdmin from './pages/admin/LogoutAdmin';
 import TeacherDashboard from './pages/admin/teacher/TeacherDashboard';
 import SideNavT from './pages/admin/teacher/SideNavT';
 import Classes from './pages/admin/teacher/classes';
+import ComplainSection from './pages/admin/teacher/ComplainSection';
+import StudentTeacherPanel from './pages/admin/teacher/StudentTeacherPanel';
+import StudentDashboard from './pages/student/StudentDashboard';
+import SideNavS from './pages/student/SideNavS';
+import Register from './components/Register';
+
+
 
 
 
@@ -42,6 +49,8 @@ ReactDOM.render(
       <Route path="/login" element={<Login />} />
       <Route path="/teacher" element={<Teacher/>} />
       <Route path="/Student" element={<Student/>} />
+      <Route path="/Register" element={<Register/>} />
+
 
       {/* Admin Dashboard */}
 
@@ -58,7 +67,13 @@ ReactDOM.render(
       <Route path="/TeacherDashboard" element={<TeacherDashboard/>} />
       <Route path="/Sidenavteacher" element={<SideNavT/>} />
       <Route path="/classes" element={<Classes/>} />
-     
+      <Route path="/complain" element={<ComplainSection/>} />
+      <Route path="/student-teacherDb" element={<StudentTeacherPanel/>} />
+    
+      
+     {/* Student Dashboard */}
+     <Route path="/Sidenavstudent" element={<SideNavS/>} />
+     <Route path="/StudentDashboard" element={<StudentDashboard/>} />
       
     
 

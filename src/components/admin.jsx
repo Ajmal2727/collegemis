@@ -33,7 +33,7 @@ const Login = () => {
             <h1 className="display-4 fw-bolder">Welcome Back</h1>
             <p className="lead text-center">Enter Your Credentials To Login</p>
             <h5 className="mb-4">OR</h5>
-            <NavLink to="/colleges" className="btn btn-outline-primary rounded-pill pb-2 w-50">
+            <NavLink to="/teacher" className="btn btn-outline-primary rounded-pill pb-2 w-50">
               Register
             </NavLink>
           </div>

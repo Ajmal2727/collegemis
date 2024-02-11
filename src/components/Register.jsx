@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -33,7 +33,7 @@ const Login = () => {
             <h1 className="display-4 fw-bolder">Welcome Back</h1>
             <p className="lead text-center">Enter Your Credentials To Login</p>
             <h5 className="mb-4">OR</h5>
-            <NavLink to="/login" className="btn btn-outline-primary rounded-pill pb-2 w-50">
+            <NavLink to="/Register" className="btn btn-outline-primary rounded-pill pb-2 w-50">
               Register
             </NavLink>
           </div>
@@ -91,4 +91,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

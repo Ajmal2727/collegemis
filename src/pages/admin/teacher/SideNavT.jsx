@@ -41,13 +41,13 @@ function SideNavT() {
     <div>
       <CssBaseline />
       {/* Header */}
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{ bgcolor: '#2196f3' }}> {/* Fixed position */}
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Your App Name
+            SARASWATI EDUCATION SOCIETY
           </Typography>
           {/* Avatar with profile */}
           <IconButton color="inherit" onClick={handleProfileToggle}>
@@ -114,17 +114,17 @@ function SideNavT() {
               </ListItemIcon>
               <ListItemText primary="Class" />
             </ListItem>
-            <ListItem button component={NavLink} to="/student" activeClassName="active" exact>
+            <ListItem button component={NavLink} to="/student-teacherdb" activeClassName="active" exact>
               <ListItemIcon>
                 <GroupIcon />
               </ListItemIcon>
               <ListItemText primary="Student" />
             </ListItem>
-            <ListItem button component={NavLink} to="/complaints" activeClassName="active" exact>
+            <ListItem button component={NavLink} to="/complain" activeClassName="active" exact>
               <ListItemIcon>
                 <ReportProblemIcon />
               </ListItemIcon>
-              <ListItemText primary="Complaints" />
+              <ListItemText primary="Complain" />
             </ListItem>
             <ListItem button component={NavLink} to="/login" activeClassName="active" exact>
               <ListItemIcon>

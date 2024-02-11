@@ -19,6 +19,7 @@ import {
   Grid,
   Tabs,
   Tab,
+  TablePagination,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { CSVLink } from 'react-csv';
@@ -34,6 +35,18 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+  },
+  header: {
+    marginBottom: theme.spacing(2),
+  },
+  addButton: {
+    marginRight: theme.spacing(2),
+  },
+  actionButton: {
+    marginRight: theme.spacing(1),
+  },
+  timetableForm: {
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -52,6 +65,19 @@ function Classes() {
   const [newMark, setNewMark] = useState({ name: '', branch: '', subject: '', marks: '' });
   const [editIndex, setEditIndex] = useState(-1); // Track the index of the row being edited
   const [currentTab, setCurrentTab] = useState(0); // Track the active tab index
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
+  const [timeTable, setTimeTable] = useState([]);
+  const [testSchedule, setTestSchedule] = useState({ subject: '', date: '' });
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleNameChange = (event) => {
     setNewMark({ ...newMark, name: event.target.value });
@@ -97,17 +123,20 @@ function Classes() {
     setSearchQuery(query);
   };
 
-  const filteredStudentMarks = studentMarks.filter(
-    (mark) =>
-      mark.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      mark.branch.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      mark.subject.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleTestScheduleChange = (event) => {
+    setTestSchedule({ ...testSchedule, [event.target.name]: event.target.value });
+  };
+
+  const handleTestScheduleSubmit = (event) => {
+    event.preventDefault();
+    setTimeTable([...timeTable, testSchedule]);
+    setTestSchedule({ subject: '', date: '' });
+  };
 
   // Prepare CSV data
   const csvData = [
     ['Name', 'Branch', 'Subject', 'Marks Obtain', 'Total'],
-    ...filteredStudentMarks.map((mark) => [
+    ...studentMarks.map((mark) => [
       mark.name,
       mark.branch,
       mark.subject,
@@ -116,21 +145,16 @@ function Classes() {
     ]),
   ];
 
-  // Function to handle uploading test document
-  const handleUploadDocument = (id) => {
-    // Implement the functionality to handle document upload
-    alert(`Upload document for student with ID: ${id}`);
-  };
-
   return (
     <div className={classes.root}>
-      <SideNavT/>
-      <Typography variant="h4" gutterBottom>
+      <SideNavT />
+      <Typography variant="h4" gutterBottom className={classes.header}>
         Student Marks
       </Typography>
       <Tabs value={currentTab} onChange={(e, newValue) => setCurrentTab(newValue)} aria-label="student marks tabs">
         <Tab label="Student Marks" />
         <Tab label="Uploaded Documents" />
+        <Tab label="Test and Time Table" />
       </Tabs>
       {currentTab === 0 && (
         <>
@@ -176,12 +200,15 @@ function Classes() {
               <TextField label="Marks" value={newMark.marks} onChange={handleMarksChange} className={classes.formControl} />
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" onClick={editIndex !== -1 ? saveMark : addMark}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={editIndex !== -1 ? saveMark : addMark}
+                className={classes.addButton}
+              >
                 {editIndex !== -1 ? 'Save' : 'Add Mark'}
               </Button>
-            </Grid>
-            <Grid item>
-              <CSVLink data={csvData} filename={"student_marks.csv"}>
+              <CSVLink data={csvData} filename={'student_marks.csv'}>
                 <Button variant="contained" color="primary">
                   Download CSV
                 </Button>
@@ -202,7 +229,10 @@ function Classes() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredStudentMarks.map((mark, index) => (
+                {(rowsPerPage > 0
+                  ? studentMarks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  : studentMarks
+                ).map((mark, index) => (
                   <TableRow key={mark.id}>
                     <TableCell>{mark.name}</TableCell>
                     <TableCell>{mark.branch}</TableCell>
@@ -216,14 +246,11 @@ function Classes() {
                         </Button>
                       ) : (
                         <>
-                          <Button variant="contained" color="secondary" onClick={() => deleteMark(mark.id)}>
+                          <Button variant="contained" color="secondary" onClick={() => deleteMark(mark.id)} className={classes.actionButton}>
                             Delete
                           </Button>
-                          <Button variant="contained" color="primary" onClick={() => editMark(index)}>
+                          <Button variant="contained" color="primary" onClick={() => editMark(index)} className={classes.actionButton}>
                             Edit
-                          </Button>
-                          <Button variant="contained" color="primary" onClick={() => handleUploadDocument(mark.id)}>
-                            Upload Document
                           </Button>
                         </>
                       )}
@@ -232,6 +259,15 @@ function Classes() {
                 ))}
               </TableBody>
             </Table>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={studentMarks.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </TableContainer>
         </>
       )}
@@ -239,6 +275,59 @@ function Classes() {
         <div>
           <Typography variant="h6">Uploaded Documents</Typography>
           <Typography variant="body1">Display uploaded documents here...</Typography>
+        </div>
+      )}
+      {currentTab === 2 && (
+        <div>
+          <Typography variant="h6">Test and Time Table</Typography>
+          <Grid container spacing={2} className={classes.timetableForm}>
+            <Grid item>
+              <TextField
+                label="Subject"
+                value={testSchedule.subject}
+                onChange={handleTestScheduleChange}
+                name="subject"
+                className={classes.formControl}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Date"
+                type="date"
+                value={testSchedule.date}
+                onChange={handleTestScheduleChange}
+                name="date"
+                className={classes.formControl}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" onClick={handleTestScheduleSubmit}>
+                Add Test
+              </Button>
+            </Grid>
+          </Grid>
+          <Typography variant="h6">Test Schedule</Typography>
+          <TableContainer component={Paper} style={{ marginTop: '20px' }}>
+            <Table className={classes.table} aria-label="test schedule table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Subject</TableCell>
+                  <TableCell>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {timeTable.map((schedule, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{schedule.subject}</TableCell>
+                    <TableCell>{schedule.date}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       )}
     </div>

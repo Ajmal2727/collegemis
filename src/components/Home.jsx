@@ -8,7 +8,7 @@ const Home = () => {
           <div className="col-md-8 text-center">
             <h1 className="display-4 fw-bolder mb-4">Welcome To Saraswati Education Society</h1>
             <p className="lead fs-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt ultrices est vel venenatis.
+              We are Quantum Crafters, our main goal is to reach higher level in our profession.
             </p>
             <div className="buttons mt-4">
               <button className="btn btn-primary me-4 rounded-pill px-4 py-2 animated-button">Learn More</button>

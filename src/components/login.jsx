@@ -47,7 +47,7 @@ const Login = () => {
                 <i className="fa fa-graduation-cap fa-4x mb-4 text-primary"></i>
                 <h5 className="card-title">STUDENT</h5>
                 <p className="card-text">Login as a Student</p>
-                <NavLink to="/student" className="btn btn-primary">
+                <NavLink to="/StudentDashboard" className="btn btn-primary">
                   DASHBOARD
                 </NavLink>
               </div>
