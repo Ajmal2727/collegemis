@@ -28,6 +28,7 @@ import StudentTeacherPanel from './pages/admin/teacher/StudentTeacherPanel';
 import StudentDashboard from './pages/student/StudentDashboard';
 import SideNavS from './pages/student/SideNavS';
 import Register from './components/Register';
+import ComplainS from './pages/student/ComplainS';
 
 
 
@@ -74,6 +75,7 @@ ReactDOM.render(
      {/* Student Dashboard */}
      <Route path="/Sidenavstudent" element={<SideNavS/>} />
      <Route path="/StudentDashboard" element={<StudentDashboard/>} />
+     <Route path="/student-complaint-section" element={<ComplainS/>} />
       
     
 

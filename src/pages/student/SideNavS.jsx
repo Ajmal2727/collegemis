@@ -17,11 +17,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AppsIcon from '@mui/icons-material/Apps';
-import PersonIcon from '@mui/icons-material/Person';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
+
+
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+
 import BookIcon from '@mui/icons-material/Book';
 import EventIcon from '@mui/icons-material/Event';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -201,7 +201,7 @@ export default function SideNavS() {
         <Divider />
         <List>
           {[
-            { text: 'Complain', icon: <ReportProblemIcon />, link: '/complaints' },
+            { text: 'Complain', icon: <ReportProblemIcon />, link: '/student-complaint-section' },
             { text: 'Logout', icon: <ExitToAppIcon />, link: '/login' },
           ].map(({ text, icon, link }, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block', position: 'relative' }}>
