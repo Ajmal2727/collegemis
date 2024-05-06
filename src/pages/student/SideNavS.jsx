@@ -17,6 +17,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AppsIcon from '@mui/icons-material/Apps';
+import { ErrorOutline } from '@mui/icons-material'; // Import the ErrorOutline icon
+
 
 
 
@@ -24,7 +26,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import BookIcon from '@mui/icons-material/Book';
 import EventIcon from '@mui/icons-material/Event';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+
 import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -175,8 +177,8 @@ export default function SideNavS() {
         <List>
           {[
             { text: 'Home', icon: <AppsIcon />, link: '/StudentDashboard' },
-            { text: 'Subject', icon: <BookIcon />, link: '/studentdetails' }, // Changed icon to BookIcon
-            { text: 'Attendance', icon: <EventIcon />, link: '/notice' }, // Changed icon to EventIcon
+            { text: 'Subject', icon: <BookIcon />, link: '/student-subject-section' }, // Changed icon to BookIcon
+            { text: 'Attendance', icon: <EventIcon />, link: '/student-attendance-section' }, // Changed icon to EventIcon
           ].map(({ text, icon, link }, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block', position: 'relative' }}>
               <ListItemButton component={NavLink} to={link} activeClassName={text === 'Teacher' ? 'Mui-selected' : ''} exact>
@@ -201,7 +203,8 @@ export default function SideNavS() {
         <Divider />
         <List>
           {[
-            { text: 'Complain', icon: <ReportProblemIcon />, link: '/student-complaint-section' },
+             { text: 'Complain', icon: <ErrorOutline />, link: '/student-complaint-section' }, 
+            // { text: 'Complain', icon: <ReportProblemIcon />, link: '/student-complaint-section' },
             { text: 'Logout', icon: <ExitToAppIcon />, link: '/login' },
           ].map(({ text, icon, link }, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block', position: 'relative' }}>

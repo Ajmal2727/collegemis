@@ -159,7 +159,7 @@ function ComplainS() {
 
   return (
     <div>
-      <SideNavS />
+      <SideNavS/>
       <main className={classes.content}>
         <Container style={{ marginTop: -24 }}>
           <AppBar position="static" style={{ backgroundColor: '#2196f3' }}>

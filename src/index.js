@@ -8,6 +8,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Colleges from './components/Colleges';
+import { ContactPage } from '@mui/icons-material';
 import Newsletter from './components/Newsletter';
 import Login from './components/login'; 
 import Teacher from './components/teacher';
@@ -29,6 +30,10 @@ import StudentDashboard from './pages/student/StudentDashboard';
 import SideNavS from './pages/student/SideNavS';
 import Register from './components/Register';
 import ComplainS from './pages/student/ComplainS';
+import AttendanceForm from './pages/student/StdAttendanceMarking';
+import SubjectFeature from './pages/student/SubStd.jsx';
+
+
 
 
 
@@ -51,6 +56,7 @@ ReactDOM.render(
       <Route path="/teacher" element={<Teacher/>} />
       <Route path="/Student" element={<Student/>} />
       <Route path="/Register" element={<Register/>} />
+      <Route path="/Contact" element={<ContactPage/>} />
 
 
       {/* Admin Dashboard */}
@@ -76,7 +82,8 @@ ReactDOM.render(
      <Route path="/Sidenavstudent" element={<SideNavS/>} />
      <Route path="/StudentDashboard" element={<StudentDashboard/>} />
      <Route path="/student-complaint-section" element={<ComplainS/>} />
-      
+     <Route path="/student-attendance-section" element={<AttendanceForm/>} />
+     <Route path="/student-subject-section" element={<SubjectFeature/>} />
     
 
      

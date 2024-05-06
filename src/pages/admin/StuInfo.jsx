@@ -17,7 +17,7 @@ const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
   return randomArrayItem(roles);
 };
-
+  
 const initialRows = [
   {
     id: randomId(),
